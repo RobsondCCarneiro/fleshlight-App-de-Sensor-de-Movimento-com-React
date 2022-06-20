@@ -1,20 +1,66 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const App = () => {
+  const [toggle, setToggle] = useState(false);
+
+  //Função de Callback para uma boa prática
+  const handleChangeToggle = () => setToggle(oldToggle => !oldToggle)
+
+  return <View style={toggle ? style.containerLight : style.container}>
+    <TouchableOpacity onPress={handleChangeToggle} >
+      <Image
+        style={toggle ? style.lightingOn : style.lightingOff}
+        source={
+          toggle
+            ? require('./assets/icons/eco-light.png')
+            : require('./assets/icons/eco-light-off.png')
+        }
+      />
+      <Image
+        style={style.dioLogo}
+        source={
+          toggle
+            ? require('./assets/icons/logo-dio.png')
+            : require('./assets/icons/logo-dio-white.png')
+        }
+      />
+    </TouchableOpacity>
+  </View>;
 }
 
-const styles = StyleSheet.create({
+export default App;
+
+const style = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  containerLight: {
+    flex: 1,
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  lightingOn: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    width: 150,
+    height: 150,
+  },
+  lightingOff: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    tintColor: 'white',
+    width: 150,
+    height: 150,
+  },
+  dioLogo: {
+    resizeMode: 'contain',
+    alignSelf: 'center',
+    width: 250,
+    height: 250,
+  }
 });
