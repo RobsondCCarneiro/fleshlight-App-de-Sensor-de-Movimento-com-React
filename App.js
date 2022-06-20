@@ -13,8 +13,18 @@ const App = () => {
     //Liga flash do celular
     //Alert.alert('Atualizou o componente ' + toggle)
     Torch.switchState(toggle);
-    console.log("Trocou o estado do flash");
-  }, [toggle])
+    //console.log("Trocou o estado do flash");
+  }, [toggle]);
+
+  useEffect(() =>{
+    //Quando o celular for chacoalhado, é mudado o toggle
+    const subscription = RNShake.addListener(()=>{
+      setToggle(oldToggle => !oldToggle)
+    });
+
+    //Quando o componente for desmontado, chama esta função
+    return () => subscription.remove();
+  }, []);
 
   return <View style={toggle ? style.containerLight : style.container}>
     <TouchableOpacity onPress={handleChangeToggle} >
