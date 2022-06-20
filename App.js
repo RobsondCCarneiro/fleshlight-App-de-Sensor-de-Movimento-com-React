@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Image, TouchableOpacity, Alert } from 'react-native'
+import Torch from 'react-native-torch'
+import RNShake from 'react-native-shake'
 
 const App = () => {
   const [toggle, setToggle] = useState(false);
 
   //Função de Callback para uma boa prática
   const handleChangeToggle = () => setToggle(oldToggle => !oldToggle)
+
+  useEffect(() =>{
+    //Liga flash do celular
+    //Alert.alert('Atualizou o componente ' + toggle)
+    Torch.switchState(toggle);
+    console.log("Trocou o estado do flash");
+  }, [toggle])
 
   return <View style={toggle ? style.containerLight : style.container}>
     <TouchableOpacity onPress={handleChangeToggle} >
